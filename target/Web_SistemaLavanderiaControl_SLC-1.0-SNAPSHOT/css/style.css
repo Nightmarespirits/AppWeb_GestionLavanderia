@@ -1,0 +1,117 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 01/05/2024, 06:39:38 PM
+    Author     : ROBOT
+*/
+
+
+/*
+Estilos personalizados para el sidebar
+*/
+.sidebar-principal{
+    background-color: #943126;
+}
+
+/*
+Estilos personalizados para el jsp de esta ruta
+/adm/nuevo/orden.jsp
+*/
+.ordenHeader{
+    padding: 0;
+}
+.ordenHeader h3{
+    margin:0;
+    padding: 8px 5px ;
+}
+.ordenHeader ol.breadcrumb{
+    background: #ffffff;
+    margin:0;
+}
+div .tarjetaSombreada{
+    padding: 8px;
+}
+.ordenHeader .divflex{
+    display: flex;
+    justify-content:center;
+}
+.formularioDetalleSrvicio label{
+    margin:0 10px;
+}
+.formularioDetalleSrvicio .frmg{
+    width:100%;
+}
+.formularioDetalleSrvicio .gcliente{
+    width:80%;
+}
+.formularioDetalleSrvicio .form-row{
+    margin: 5px 0;
+    width:100%;
+}
+.formularioDetalleSrvicio .empInpt{
+    width:68%;
+}
+.formularioDetalleSrvicio .horaentInpt{
+    width: 100px;
+}
+.formularioDetalleSrvicio #fechaDelivery{
+    width:80px;
+}
+
+i.fas.fa-trash.rmv-ico:hover {
+    color: #943126;
+    cursor:pointer;
+}
+/*Lista de navegacion servicios en la aplicacion nueva orden */
+
+input.tbDetailsCantInpt {
+    width:35px;
+}
+.ul-treeItems{
+    list-style: none;
+    margin:0;
+    padding:0;
+    cursor:pointer;
+}
+.ul-treeItems ul{
+    margin:0;
+    padding: 0;
+}
+.divTipoPrendas{
+    padding: 10px 0 10px 10px;
+    font-weight: bolder;
+    font-size: 1rem;
+}
+.divTipoPrendas:hover{
+    background-color:  #943126;
+    color:white;
+}
+li .item{
+    list-style: none;
+    cursor: pointer;
+}
+li .item:hover{
+    background-color:  #943126;
+    color:white;
+}
+
+li .item div{
+    padding: 10px 0 10px 30px;
+}
+
+.hidden{
+    display:none;
+}
+
+/**modal z-indexes**/
+.modal-backdrop {
+  z-index: -1; /* Just below the modal */
+}
+
+/*Color de borde logo*/
+[class*=sidebar-dark] .brand-link {
+    border-bottom: 1px solid #ffffff;
+}
