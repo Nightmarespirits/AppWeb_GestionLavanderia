@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -34,7 +35,7 @@
       <form action="/Web_SistemaLavanderiaControl_SLC/Validador" method="post">
           
         <div class="input-group mb-3">
-          <input type="email" class="form-control" name="email" placeholder="Email">
+          <input type="text" class="form-control" name="email" placeholder="Email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>

@@ -5,8 +5,11 @@
  */
 package Controller;
 
+import Model.Contrato;
+import Model.EmailUtil;
 import Model.Empleado;
 import Model.EmpleadoDAO;
+import Model.Usuario;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.ParseException;
 import jakarta.servlet.ServletException;
@@ -59,7 +62,13 @@ public class Empleadoslet extends HttpServlet {
             String dir = request.getParameter("empDir");
             String eCivil = request.getParameter("empEstCivil");
             String suc = request.getParameter("empSucursal");
-            int estadoEmp = Integer.parseInt(request.getParameter("empEstado"));
+            String estadoEmp = request.getParameter("empEstado");
+                    
+            int numEstadoEmp = 0;
+            if(estadoEmp.equals("Activo")){
+                numEstadoEmp = 1;
+            }
+            
             int nroHijos = Integer.parseInt(request.getParameter("empNroHijos"));
             /*
             Part foto;
@@ -84,9 +93,55 @@ public class Empleadoslet extends HttpServlet {
                  if (entrada != null) entrada.close();
             }
             */
-            Empleado emp = new Empleado(ape,nom,genero,tipoDoc,numDoc,tel,email,dist,fecNac,nac,dir,eCivil,suc,estadoEmp,nroHijos,null);
-            empDao.insertEmp(emp);
-            response.sendRedirect("index.jsp");
+            Empleado emp = new Empleado(ape,nom,genero,tipoDoc,numDoc,tel,email,dist,fecNac,nac,dir,eCivil,suc,numEstadoEmp,nroHijos,null);
+            
+            boolean res = empDao.insertEmp(emp);
+            System.out.println("Estado de insercion de empleado = " + res);
+            
+            
+            Date fecInicioContrato = formateador.parse(request.getParameter("fecIncContrato"));
+            Date fecTemContrato = formateador.parse(request.getParameter("fecTermContrato"));
+            String cargo = request.getParameter("empCargo");
+            int sueldo = Integer.parseInt(request.getParameter("empSueldo"));
+            String moneda = request.getParameter("monedaContrato");
+            String estadoContrato = request.getParameter("empEstadoContrato");
+            String obs = request.getParameter("obsCotrato");
+            
+            Contrato cnt = new Contrato();
+            Contrato contrato = new Contrato(fecInicioContrato,fecTemContrato,numDoc, suc ,cargo, sueldo, moneda, estadoContrato, obs);
+            boolean resCont = cnt.insertarCont(contrato);
+            System.out.println("estado de insercion de contrato = " + resCont);
+            
+            
+            //Comprobar si se ha seleccionado crear cuenta de usuario
+            String chekCrearCuenta = request.getParameter("checkNuevaCuenta");
+            
+            if ("on".equals(chekCrearCuenta)) {
+                String contrasenia= EmailUtil.generarContraseña();
+                String perfil;
+                
+                if(cargo.equals("Administrador")){
+                    perfil = "Administrador";
+                }else{
+                    perfil = "Empleado";
+                }
+                Usuario usuario = new Usuario();
+                Usuario usr = new Usuario(numDoc,numDoc,contrasenia , estadoEmp, perfil);
+                boolean insUsr = usuario.insertarUsuario(usr);
+                if(insUsr){
+                    String destinatario = email; //Correo electronico del empleado
+                    EmailUtil.enviarMail(destinatario, "Cuenta de Usuario SLC", "Se ha creado su cuenta \nUsuario: " + numDoc + "\nContraseña: " + contrasenia);
+                }else{
+                     System.out.println("No se ha podido enviar correo al usuario");
+                }
+                
+            }else{
+                System.out.println("No se ha creado cuenta de usuario");
+            }
+            
+            response.sendRedirect("adm/index.jsp");
+            
+            
         }else if(tipoTransac.equals("UPD")){
             
         }else if(tipoTransac.equals("DEL")){

@@ -1,5 +1,6 @@
 package Model;
 
+import com.google.gson.annotations.Expose;
 import config.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -17,18 +18,29 @@ import java.util.ArrayList;
 public class Orden {
     Conexion cnx = new Conexion();
     Connection cn = cnx.getCn();
-    
+    @Expose
     private String  nroOrden;
+    
+    @Expose
     private Usuario usr;
+    @Expose
     private Cliente cliente;
+    @Expose
     private Date fecOrden;
+    @Expose
     private Time horaOrden;
+    @Expose
     private Date fecEntrega;
+    @Expose
     private Time horaEntrega;
+    @Expose
     private String estadoOrden;
+    @Expose
     private int aCuenta;
     //una misma orden puede tener una o mas detalles todo eso lo almacenamos en una lista detalles
+    @Expose
     private List<DetalleServicio> listDetalles;
+    @Expose
     private Factura factura;
 
     public Orden() {

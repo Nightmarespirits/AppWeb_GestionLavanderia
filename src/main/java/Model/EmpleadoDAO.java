@@ -25,18 +25,18 @@ public class EmpleadoDAO {
     public List listarEmp(){
         List lista = new ArrayList();
         try {
-            String sql = "SELECT        dbo.tb_Empleado.CodEmp,  CONCAT(dbo.tb_Empleado.Apellidos, ' ' , dbo.tb_Empleado.Nombres) AS Nombres, dbo.tb_Empleado.NumDocIdentidad, dbo.tb_Cargo.Cargo, dbo.tb_Empleado.Telefono, dbo.tb_Empleado.Email, \n" +
-"                         dbo.tb_Distrito.NombreDist\n" +
-"FROM            dbo.tb_Empleado INNER JOIN\n" +
-"                         dbo.tb_Distrito ON dbo.tb_Empleado.CodDist = dbo.tb_Distrito.CodDist INNER JOIN\n" +
-"                         dbo.tb_ContratoEmp ON dbo.tb_Empleado.CodEmp = dbo.tb_ContratoEmp.CodEmp INNER JOIN\n" +
-"                         dbo.tb_Cargo ON dbo.tb_ContratoEmp.CodCargo = dbo.tb_Cargo.CodCargo";
+            String sql = "SELECT        { fn CONCAT(dbo.tb_Empleado.Apellidos, dbo.tb_Empleado.Nombres) } AS Nombres, dbo.tb_Empleado.NumDocIdentidad, dbo.tb_Cargo.Cargo, dbo.tb_Empleado.Telefono, dbo.tb_Empleado.Email, \n" +
+"                         dbo.tb_ContratoEmp.EstadoContrato, dbo.tb_Sucursal.NomSucursal\n" +
+"FROM            dbo.tb_Cargo INNER JOIN\n" +
+"                         dbo.tb_ContratoEmp ON dbo.tb_Cargo.CodCargo = dbo.tb_ContratoEmp.CodCargo INNER JOIN\n" +
+"                         dbo.tb_Empleado ON dbo.tb_ContratoEmp.CodEmp = dbo.tb_Empleado.CodEmp INNER JOIN\n" +
+"                         dbo.tb_Sucursal ON dbo.tb_ContratoEmp.CodSucursal = dbo.tb_Sucursal.CodSucursal";
             Statement st = cn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             
             while(rs.next()){
                 Object data[] ={
-                    rs.getInt(1),
+                    rs.getString(1),
                     rs.getString(2),
                     rs.getString(3),
                     rs.getString(4),

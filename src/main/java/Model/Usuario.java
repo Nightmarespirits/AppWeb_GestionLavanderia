@@ -47,9 +47,13 @@ public class Usuario {
     private Date fecReg;
     @Expose
     private String estadoUsuario;
-    
+    @Expose
     private byte[] foto;
+    @Expose
     public String session;
+    @Expose
+    private String perfil;
+            
 
     public Usuario() {
     }
@@ -68,6 +72,17 @@ public class Usuario {
         this.estadoUsuario = estadoUsuario;
         this.foto = foto;
     }
+
+    public Usuario(String numDoc, String username, String password, String estadoUsuario, String perfil) {
+        this.numDoc = numDoc;
+        this.username = username;
+        this.password = password;
+        this.estadoUsuario = estadoUsuario;
+        this.perfil = perfil;
+    }
+    
+    
+
     
     //DAO
     public Usuario buscarUsrDoc(String docIdent){
@@ -113,16 +128,14 @@ public class Usuario {
         Usuario usr = null;
         try {
             String sql = "SELECT        dbo.tb_Empleado.CodEmp, dbo.tb_Empleado.Apellidos, dbo.tb_Empleado.Nombres, dbo.tb_Empleado.NumDocIdentidad, dbo.tb_Usuario.CodUsuario, dbo.tb_Usuario.NombreUsuario, dbo.tb_Usuario.Contrasenia, \n" +
-            " dbo.tb_Perfil.Perfil, dbo.tb_Area.Area, dbo.tb_Cargo.Cargo, dbo.tb_Usuario.FecRegistro, dbo.tb_Usuario.EstadoUsuario, dbo.tb_Empleado.Foto\n" +
-            "FROM     dbo.tb_Area INNER JOIN\n" +
-            " dbo.tb_Cargo ON dbo.tb_Area.CodArea = dbo.tb_Cargo.CodArea INNER JOIN\n" +
-            " dbo.tb_ContratoEmp ON dbo.tb_Cargo.CodCargo = dbo.tb_ContratoEmp.CodCargo INNER JOIN\n" +
-            " dbo.tb_Empleado ON dbo.tb_ContratoEmp.CodEmp = dbo.tb_Empleado.CodEmp INNER JOIN\n" +
-            " dbo.tb_Distrito ON dbo.tb_Empleado.CodDist = dbo.tb_Distrito.CodDist INNER JOIN\n" +
-            " dbo.tb_Sucursal ON dbo.tb_ContratoEmp.CodSucursal = dbo.tb_Sucursal.CodSucursal AND dbo.tb_Distrito.CodDist = dbo.tb_Sucursal.CodDist INNER JOIN\n" +
-            " dbo.tb_Usuario ON dbo.tb_Empleado.CodEmp = dbo.tb_Usuario.CodEmp INNER JOIN\n" +
-            " dbo.tb_Perfil ON dbo.tb_Usuario.CodPerfil = dbo.tb_Perfil.CodPerfil\n" +
-            " where dbo.tb_Usuario.NombreUsuario='"+ username+"'";
+            "  dbo.tb_Perfil.Perfil, dbo.tb_Area.Area, dbo.tb_Cargo.Cargo, dbo.tb_Usuario.FecRegistro, dbo.tb_Usuario.EstadoUsuario, dbo.tb_Empleado.Foto\n" +
+            "FROM  dbo.tb_Area INNER JOIN\n" +
+            "  dbo.tb_Cargo ON dbo.tb_Area.CodArea = dbo.tb_Cargo.CodArea INNER JOIN\n" +
+            "  dbo.tb_ContratoEmp ON dbo.tb_Cargo.CodCargo = dbo.tb_ContratoEmp.CodCargo INNER JOIN\n" +
+            "  dbo.tb_Empleado ON dbo.tb_ContratoEmp.CodEmp = dbo.tb_Empleado.CodEmp INNER JOIN\n" +
+            "  dbo.tb_Usuario ON dbo.tb_Empleado.CodEmp = dbo.tb_Usuario.CodEmp INNER JOIN\n" +
+            "                         dbo.tb_Perfil ON dbo.tb_Usuario.CodPerfil = dbo.tb_Perfil.CodPerfil\n" +
+            "WHERE dbo.tb_Usuario.NombreUsuario='" + username + "'";
             Statement st = cn.createStatement();
 
             ResultSet rs = st.executeQuery(sql);    
@@ -159,7 +172,8 @@ public class Usuario {
             CallableStatement cs = cn.prepareCall("{ call usp_ValidarLogin( ?, ?, ?) }");
             cs.setString(1,usu);
             cs.setString(2,pas);
-            cs.setString(3, "tigo");
+            //Patron de conversion ENCRYPTBYPHRASE sql
+            cs.setString(3, "#PATTERN#");
             
             ResultSet rs = cs.executeQuery();
             if(rs.next()){
@@ -202,18 +216,23 @@ public class Usuario {
     public boolean insertarUsuario(Usuario usu){
         boolean band = false;
         try {
-            CallableStatement cs =cn.prepareCall("{call usp_insertarUsuario(?,?,?,?,?)}");    
-            cs.setString(1,usu.getNombres());
-            cs.setString(2,usu.getUsername());
-            cs.setString(3,usu.getRol());
-            cs.setString(4,usu.getEstadoUsuario());
-            cs.setString(5,usu.getPassword());
+            CallableStatement cs =cn.prepareCall("{call usp_InsertarUsuario(?,?,?,?,?)}");    
+            cs.setString(1,usu.getPerfil());
+            cs.setString(2,usu.getNumDoc());
+            cs.setString(3,usu.getUsername());
+            cs.setString(4,usu.getPassword());
+            int numEstadoUsuario = 0;
+            if(usu.getEstadoUsuario().equals("Activo")){
+                numEstadoUsuario = 1;
+            }
+            cs.setInt(5,numEstadoUsuario);
             
             
             if(cs.executeUpdate() > 0){
                 band = true;
+                System.out.println("Usuario numDoc:  "+ usu.getNumDoc() +" insertado con exito a la BD");
             }          
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Error al insertar usuario" + e.getMessage());
         }
         return band;
@@ -328,6 +347,15 @@ public class Usuario {
     public void setNumDoc(String numDoc) {
         this.numDoc = numDoc;
     }
+
+    public String getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
+    }
+    
     
     
 }

@@ -44,7 +44,7 @@ public class sUbigeo extends HttpServlet {
             response.setCharacterEncoding("UTF-8");
             System.out.println("llamada al servlet correcta servicioslet");
             Gson gson = new Gson();
-            String sql = "SELECT        dbo.tb_Departamento.NombreDep, dbo.tb_Distrito.NombreDist, dbo.tb_Provincia.NombreProv\n" +
+            String sql = "SELECT        dbo.tb_Departamento.NombreDep,  dbo.tb_Provincia.NombreProv,dbo.tb_Distrito.NombreDist\n" +
 "FROM            dbo.tb_Departamento INNER JOIN\n" +
 "                         dbo.tb_Provincia ON dbo.tb_Departamento.CodDep = dbo.tb_Provincia.CodDep INNER JOIN\n" +
 "                         dbo.tb_Distrito ON dbo.tb_Provincia.CodProv = dbo.tb_Distrito.CodProv";
@@ -54,11 +54,8 @@ public class sUbigeo extends HttpServlet {
             while(rs.next()){
                 Object data[] = {
                     rs.getString(1),
-                    rs.getInt(2),
-                    rs.getString(3),
-                    rs.getString(4),
-                    rs.getString(5),
-                    rs.getString(6)
+                    rs.getString(2),
+                    rs.getString(3)
                 };
 
                 ubigData.add(data);

@@ -5,7 +5,7 @@
  */
 package Model;
 
-import config.Conexion;
+import com.google.gson.annotations.Expose;
 import config.PoolConexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -16,13 +16,21 @@ import java.sql.SQLException;
  * @author ROBOT
  */
 public class DetalleServicio {
+    @Expose
     private String nroOrden;
+    @Expose
     private int Cantidad;
+    @Expose
     private String tipoServ;
+    @Expose
     private String tipoPrenda;
+    @Expose
     private String prenda;
+    @Expose
     private Double precio;
+    @Expose
     private Double subtotal;
+    @Expose
     private String obs;
     
     public DetalleServicio() {

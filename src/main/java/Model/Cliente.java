@@ -5,6 +5,7 @@
  */
 package Model;
 
+import com.google.gson.annotations.Expose;
 import config.Conexion;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -22,19 +23,36 @@ import java.util.List;
 public class Cliente {
     Conexion cnx = new Conexion();
     Connection cn = cnx.getCn();
+    
+    @Expose
     private String nombres;
+    
+    @Expose
     private String apellidos;
+    
+    @Expose
     private String genero;
+    @Expose
     private String tipoDoc;
+    @Expose
     private String numDoc;
+    @Expose
     private String tel;
+    @Expose
     private String email;
+    @Expose
     private String dist;
+    @Expose
     private String direccion;
+    @Expose
     private Date fecNac;
+    @Expose
     private String nacionalidad;
+    @Expose
     private String eCivil;
+    @Expose
     private Date FecRegistro;
+    @Expose
     private String fotoPath;
 
     public Cliente() {

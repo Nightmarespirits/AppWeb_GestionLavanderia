@@ -5,6 +5,7 @@ import Model.DetalleServicio;
 import Model.Orden;
 import Model.Usuario;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -43,9 +44,7 @@ public class OrdenesLet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException {
         
-        // Configurar el tipo de contenido de la respuesta
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
+        
 
         // Parsear el cuerpo de la solicitud como JSON
         JsonObject ordenData = new Gson().fromJson(request.getReader(), JsonObject.class);
@@ -78,7 +77,7 @@ public class OrdenesLet extends HttpServlet {
         Cliente cli = cliente.buscarCliente(docIdCliente);
         
         //Crear ojeto Orden
-        Orden orden = new Orden(nroOrden, usr, cliente, fecRecep,horaRecep, fecEntrega, horaEntrega, "En Proceso ", aCuenta);
+        Orden orden = new Orden(nroOrden, usr, cli, fecRecep,horaRecep, fecEntrega, horaEntrega, "En Proceso ", aCuenta);
         boolean insertarOrden = orden.insertarOrden(orden, usr, cli);
 
         System.out.println("Estadod e la insecion de orden de servicio " + insertarOrden);
@@ -90,42 +89,64 @@ public class OrdenesLet extends HttpServlet {
         //Crear objeto DetalleServicio sin propiedades aun
         DetalleServicio dtl = new DetalleServicio();
         
-        //Iterar el jsonArray para agregar propiedades al objeto DetalleServicio
-        for(JsonElement detal : detalles){
-            
-            JsonObject detalle = detal.getAsJsonObject();
-            
-            
-            int cantidad = Integer.parseInt(detalle.get("cantidad").getAsString());
-            String servicio = detalle.get("servicio").getAsString();
-            String prenda = detalle.get("prenda").getAsString();
-            Double precio = Double.valueOf(detalle.get("precio").getAsString());
-            Double subtotal = Double.valueOf(detalle.get("subtotal").getAsString());
-            String observaciones = detalle.get("observaciones").getAsString();
-            
-            //Crear un nuevo detalle servicio objeto con propiedades
-            DetalleServicio detalleServicio = new DetalleServicio(nroOrden, cantidad, servicio , prenda, precio,subtotal, observaciones);
+        try {
+                    //Iterar el jsonArray para agregar propiedades al objeto DetalleServicio
+            for(JsonElement detal : detalles){
+
+                JsonObject detalle = detal.getAsJsonObject();
+
+
+                int cantidad = Integer.parseInt(detalle.get("cantidad").getAsString());
+                String servicio = detalle.get("servicio").getAsString();
+                String prenda = detalle.get("prenda").getAsString();
+                Double precio = Double.valueOf(detalle.get("precio").getAsString());
+                Double subtotal = Double.valueOf(detalle.get("subtotal").getAsString());
+                String observaciones = detalle.get("observaciones").getAsString();
+
+                //Crear un nuevo detalle servicio objeto con propiedades
+                DetalleServicio detalleServicio = new DetalleServicio(nroOrden, cantidad, servicio , prenda, precio,subtotal, observaciones);
             System.out.println("prenda de detalle:" + detalleServicio.getPrenda());
-            //Agregar detalle servicio a la lista de detalles de el objeto orden:
-            orden.addDetalle(detalleServicio);
-            
-            //Subir a la BD dicho detalle servicio
-            boolean resultInsDtlServ = dtl.insertarDetalle(detalleServicio);
+                //Agregar detalle servicio a la lista de detalles de el objeto orden:
+                orden.addDetalle(detalleServicio);
+
+                //Subir a la BD dicho detalle servicio
+                boolean resultInsDtlServ = dtl.insertarDetalle(detalleServicio);
             System.out.println("Estado de insercion de detalles a la BD" + resultInsDtlServ);
-            
-            
+
+
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Error en El bucle de insercion: " + e.getMessage());
+        }finally{
+            // Configurar el tipo de contenido de la respuesta
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            //Reenviar al servlet factura (para imprimir la factura)
+            if(insertarOrden){
+                
+                System.out.println("Isercion de Orden correcta");
+                 // Convertir el objeto a JSON usando GsonBuilder para manejar referencias circulares
+                Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+                String ordenJson = gson.toJson(orden);
+
+                // Escribir el JSON en la respuesta
+                PrintWriter out = response.getWriter();
+                out.print(ordenJson);
+                out.flush();
+                
+                System.out.println("ImpresoELJson");
+                
+                
+            }
         }
         
-        //Reenviar al servlet factura (para imprimir la factura)
+
         
         
-        request.setAttribute("orden", orden);
         
-        try (PrintWriter out = response.getWriter()) {
-            out.println("Respuesta del servidor");
-        }catch(Exception e){
-            System.out.println("Erro al intentar enviar respuesta" + e.getMessage());
-        }
+        
+        
+       
         
     }
 

@@ -16,6 +16,14 @@ Estilos personalizados para el sidebar
     background-color: #943126;
 }
 
+body.login-page{
+    background-image:  url("../dist/img/laundry_bg.jpg");
+    background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+
 /*
 Estilos personalizados para el jsp de esta ruta
 /adm/nuevo/orden.jsp

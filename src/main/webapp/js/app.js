@@ -1,8 +1,9 @@
-
+/*
+ * Core principal de la app insertar ordenes de servicio e imprimir facturas
+ * **/
 /* global Swal */
 
 (async function () {
-  console.log("LLamando funcioon asincrona");
   try {
     const response = await fetch('/Web_SistemaLavanderiaControl_SLC/Servicioslet');
     const data = await response.json();
@@ -191,7 +192,7 @@
                 if(fila && fila.parentNode.tagName === 'TBODY'){
                     const columns = fila.getElementsByTagName('td');
                     if(columns.length > 0){
-                        clienteFullname.value = columns[0].textContent;
+                        clienteFullname.value = columns[0].textContent + " " + columns[1].textContent;
                         cliDocIdentidad.value = columns[2].textContent;
                         clienteEmail.value = columns[3].textContent;
                         clienteDireccion.value = columns[4].textContent;
@@ -277,15 +278,13 @@
                     });
                     
                     //Crear el Fetch
-                    fetch(url, options).then(response => {
-                        if (!response.ok) {
-                          throw new Error('Error en la respuesta: ' + response.status + ' ' + response.statusText);
-                        }
-                        console.log(response);
-                    })
+                    fetch(url, options).then(response => response.json())
                     .then(data => {
                       Swal.close(); // Cierra el SweetAlert cuando la operación se complete
+                      
+                      localStorage.setItem('printData', JSON.stringify(data));
                       console.log('data: ', data);
+                      window.location.href = '/Web_SistemaLavanderiaControl_SLC/print.jsp';
                     })
                     .catch(error => {
                       Swal.close(); // Cierra el SweetAlert si ocurre un error

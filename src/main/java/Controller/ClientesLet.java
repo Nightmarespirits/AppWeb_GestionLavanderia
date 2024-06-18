@@ -54,7 +54,7 @@ public class ClientesLet extends HttpServlet {
             
             Cliente cli = new Cliente(nom, ape, genero, tipoDoc,numDoc, tel, email, dist, dir, fecNac, nac, eCivil, fecReg, fotoPath);
             cli.insertCliente(cli);
-            response.sendRedirect("clientes.jsp");
+            response.sendRedirect("adm/clientes.jsp");
         }else{
             System.out.println("Otro metodo distinto a insert");
         }

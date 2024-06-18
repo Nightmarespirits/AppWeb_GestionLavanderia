@@ -1,10 +1,9 @@
-/* global Swal */
+/* NO ESTA SIENDO USADO */
 
 console.log("ckecker: LLAMANDO AL SCRIPT nueva orden ");
 
 document.addEventListener('DOMContentLoaded', (e) => {
     e.preventDefault();
-    console.log("checker: cargado documento");
     //Evento keypress o input del Buscador en el sidebar prendas de la nuevaOrden.jsp Aplicacion
     const itemsContainer = document.getElementById('itemsContainer');
     const items = itemsContainer.getElementsByClassName('ul-treeItems');

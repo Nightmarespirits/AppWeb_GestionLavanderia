@@ -48,9 +48,10 @@ public class Validador extends HttpServlet {
                 
                 request.setAttribute("usrstring",usrstring);
                 if(usr.getRol().equals("Administrador")){
-                    request.getRequestDispatcher("/index.jsp").forward(request,response);
+                    System.out.println("Redireccinando..");
+                    request.getRequestDispatcher("/adm/index.jsp").forward(request,response);
                 }else{
-                    request.getRequestDispatcher("/nuevaOrden.jsp").forward(request,response);
+                    request.getRequestDispatcher("/emp/index.jsp").forward(request,response);
                 }
                 
                 
