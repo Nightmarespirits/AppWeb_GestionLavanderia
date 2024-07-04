@@ -123,3 +123,17 @@ li .item div{
 [class*=sidebar-dark] .brand-link {
     border-bottom: 1px solid #ffffff;
 }
+
+
+.userImgContainer {
+    width: 40px; /* Ajusta el tamaño según tus necesidades */
+    height: 40px; /* Ajusta el tamaño según tus necesidades */
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.userImgContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Para que la imagen se ajuste bien dentro del contenedor redondo */
+}

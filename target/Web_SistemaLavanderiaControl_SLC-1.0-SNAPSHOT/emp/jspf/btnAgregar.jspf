@@ -8,8 +8,8 @@
             <i class="fa fa-plus" aria-hidden="true"></i>
         </button>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Orden de Servicio</a>
-            <a class="dropdown-item" href="#">Cliente</a>
+            <a class="dropdown-item" href="/Web_SistemaLavanderiaControl_SLC/adm/nuevo/orden.jsp">Orden de Servicio</a>
+            <a class="dropdown-item" href="/adm/nuevo/cliente.jsp">Cliente</a>
             <a class="dropdown-item" href="#">Consulta</a>
         </div>
     </div>

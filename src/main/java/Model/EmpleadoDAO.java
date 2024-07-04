@@ -89,28 +89,6 @@ public class EmpleadoDAO {
         }
         return band;
     }
-    /*
-    void cargarFoto(byte[] bytesArr) {
-        try {
-
-            if (bytesArr != null) {
-
-                InputStream is = new ByteArrayInputStream(bytesArr);
-                BufferedImage img = ImageIO.read(is);
-                File archivo = new File("img.jpg");
-
-                ImageIO.write(img, "jpg", archivo);
-
-                ImageIcon imagen = new ImageIcon(archivo.getAbsolutePath());
-                Icon icoImg = new ImageIcon(imagen.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH));
-                lblFoto.setIcon(icoImg);
-            } else {
-                lblRuta.setText("No se ha encontrado una imagen en la base de datos del usuario");
-            }
-
-        } catch (IOException e) {
-            System.out.println("Ha ocurrido un error garrafal " + e.getMessage() + e.getStackTrace());
-        }
-    }*/
+    
     
 }

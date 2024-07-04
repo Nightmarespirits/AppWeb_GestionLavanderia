@@ -41,8 +41,8 @@
       <!--Dropdown Menu Usuario -->
       <li class="nav-item dropdown">
         <div class="user-panel d-flex" data-toggle="dropdown">
-            <div class="image">
-              <img src="#" class="img-circle elevation-1" alt="Foto de Usuario">
+            <div class="userImgContainer">
+              <img src="#"  id="renderUserImage"  alt="Foto de Usuario">
             </div>
             <div class="info">
               <a href="#" class="d-block" id="sessionUsername"></a>
@@ -52,7 +52,7 @@
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <span class="dropdown-item dropdown-header" id="usrRol"></span>
           <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
+          <a href="${pageContext.request.contextPath}/adm/perfil.jsp" class="dropdown-item">
             <i class="fas fa-envelope mr-2"></i> Ver Perfil
           </a>
           <div class="dropdown-divider"></div>

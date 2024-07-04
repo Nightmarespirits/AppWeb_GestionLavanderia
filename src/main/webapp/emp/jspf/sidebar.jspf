@@ -14,7 +14,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           
           <li class="nav-item menu-open">
-            <a href="${pageContext.request.contextPath}/emp/index.jsp" class="nav-link">
+            <a href="${pageContext.request.contextPath}/adm/index.jsp" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Inicio
@@ -34,13 +34,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                  <a class="nav-link" href="${pageContext.request.contextPath}/emp/ordenes.jsp">
+                  <a class="nav-link" href="${pageContext.request.contextPath}/adm/ordenes.jsp">
                       <i class="fa fa-history nav-icon"></i>
                       <p>Ver todo</p>
                   </a>
               </li>
               <li class="nav-item">
-                  <a class="nav-link" href="${pageContext.request.contextPath}/emp/nuevo/orden.jsp">
+                  <a class="nav-link" href="${pageContext.request.contextPath}/adm/nuevo/orden.jsp">
                     <i class="fa fa-plus nav-icon"></i>
                   <p>Nuevo</p>
                 </a>
@@ -58,13 +58,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item" >
-                  <a href="${pageContext.request.contextPath}/emp/clientes.jsp" class="nav-link">
+                  <a href="${pageContext.request.contextPath}/adm/clientes.jsp" class="nav-link">
                   <i class="nav-icon  fa fa-user"></i>
                   <p>Ver Registro</p>
                 </a>
               </li>  
               <li class="nav-item" >
-                <a class="nav-link" href="${pageContext.request.contextPath}/emp/nuevo/cliente.jsp">
+                <a class="nav-link" href="${pageContext.request.contextPath}/adm/nuevo/cliente.jsp">
                   <i class="nav-icon fa fa-plus"></i>
                   <p>Nuevo</p>
                 </a>
@@ -73,45 +73,91 @@
               
             </ul>  
           </li>
-          <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/emp/caja.jsp" class="nav-link">
+          <li class="nav-item subnavegacion">
+            <a href="${pageContext.request.contextPath}/adm/caja.jsp" class="nav-link">
               <i class="nav-icon fa fa-th-large "></i>
               <p>Caja</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/emp/delivery.jsp" class="nav-link">
+            <a href="${pageContext.request.contextPath}/adm/delivery.jsp" class="nav-link">
               <i class="nav-icon fa fa-truck"></i>
               <p>Delivery</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/emp/facturas.jsp" class="nav-link">
+          <li class="nav-item" url="adm/facturas.jsp">
+            <a href="${pageContext.request.contextPath}/adm/facturas.jsp" class="nav-link">
               <i class="nav-icon fa fa-clipboard"></i>
               <p>Registro de Facturas</p>
             </a>
               
           </li>
           <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/emp/compras.jsp" class="nav-link">
+            <a href="${pageContext.request.contextPath}/adm/compras.jsp" class="nav-link">
               <i class="nav-icon fa fa-shopping-basket"></i>
               <p>Compras</p>
             </a>
           </li>
           <li class="nav-item" >
-            <a href="${pageContext.request.contextPath}/emp/controlpuntos.jsp" class="nav-link">
+            <a href="${pageContext.request.contextPath}/adm/controlpuntos.jsp" class="nav-link">
               <i class="nav-icon fa fa-star"></i>
               <p>Control de Puntos</p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="${pageContext.request.contextPath}/emp/almacen.jsp" class="nav-link">
+            <a href="${pageContext.request.contextPath}/adm/almacen.jsp" class="nav-link">
               <i class="nav-icon fa fa-archive"></i>
               <p>Almacén</p>
             </a>
           </li>
           
           <li class="nav-header">Configuración</li>
+          <li class="nav-item">
+              <a class="nav-link">
+                <i class="nav-icon fa fa-wrench"></i>
+                <p>Empresa
+                    <i class="right fas fa-angle-left"></i>
+                </p>  
+              </a>   
+              <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="${pageContext.request.contextPath}/adm/config/empleados.jsp" class="nav-link" id="empleados">
+                      <i class="nav-icon fa fa-users "></i>
+                      <p>Empleados</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="${pageContext.request.contextPath}/adm/config/usuarios.jsp" class="nav-link">
+                      <i class="nav-icon fa fa-user "></i>
+                      <p>Usuarios</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="${pageContext.request.contextPath}/adm/mant/tipo-servicio.jsp" class="nav-link">
+                      <i class="nav-icon fa fa-wrench"></i>
+                      <p>Tipos de Servicio</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="${pageContext.request.contextPath}/adm/mant/tipo-prenda.jsp" class="nav-link">
+                      <i class="nav-icon fa fa-wrench"></i>
+                      <p>Tipos de Prenda</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="${pageContext.request.contextPath}/adm/mant/prenda.jsp" class="nav-link">
+                      <i class="nav-icon fa fa-wrench"></i>
+                      <p>Prendas</p>
+                    </a>
+                  </li>
+                  <li class="nav-item" url="adm/mant/planta.jsp">
+                    <a href="${pageContext.request.contextPath}/adm/mant/planta.jsp" class="nav-link">
+                      <i class="nav-icon fa fa-industry"></i>
+                      <p>Planta</p>
+                    </a>
+                  </li>
+              </ul>  
+          </li>
 
           <li class="nav-item">
               <a class="nav-link">
@@ -123,19 +169,19 @@
               <ul class="nav nav-treeview">
                   
                   <li class="nav-item">
-                    <a href="${pageContext.request.contextPath}/emp/config/mensaje-directo.jsp" class="nav-link">
+                    <a href="${pageContext.request.contextPath}/adm/config/mensaje-directo.jsp" class="nav-link">
                       <i class="nav-icon fa fa-envelope"></i>
                       <p>Mensaje Directo</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="${pageContext.request.contextPath}/emp/config/impresora.jsp" class="nav-link">
+                    <a href="${pageContext.request.contextPath}/adm/config/impresora.jsp"" class="nav-link">
                       <i class="nav-icon fa fa-print"></i>
                       <p>Impresora</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="${pageContext.request.contextPath}/emp/config/otros.jsp" class="nav-link">
+                    <a href="${pageContext.request.contextPath}/adm/config/otros.jsp"" class="nav-link">
                       <i class="nav-icon fa fa-cogs"></i>
                       <p>Otros</p>
                     </a>

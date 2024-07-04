@@ -234,7 +234,7 @@
                                                     <div class="form-group row">
                                                       <label for="fecReg"class="col-sm-5 col-form-label">Fecha de Registro</label>
                                                       <div class="col-sm-7">
-                                                          <input type="text" name ="fecReg" id="fecReg" value="" class="form-control disabled" >
+                                                          <input type="text" name ="fecReg" id="fecReg" value="" class="form-control disabled" v-model="fechaActual" readonly>
                                                       </div>
                                                     </div>              
                                                     
@@ -316,7 +316,10 @@
                                                     <div class="form-group row">
                                                       <label for="empEstado"class="col-sm-5 col-form-label">Estado Empleado</label>
                                                       <div class="col-sm-7">
-                                                        <input type="text" class="form-control" name="empEstado" id="empEstado" placeholder="Estado de empleado">
+                                                          <select class="form-control select2" name="empEstado" id="empEstado">
+                                                              <option>Activo</option>
+                                                              <option>Inactivo</option>
+                                                          </select>
                                                       </div>
                                                     </div> 
                                                     <div class="form-group row">
@@ -429,16 +432,20 @@
                                         <div class="form-group row">
                                           <label for="empEstadoContrato" class="col-sm-5 col-form-label">Estado Contrato</label>
                                           <div class="col-sm-7">
-                                             <input type="text" class="form-control" name="empEstadoContrato" id="empEstadoContrato" placeholder="Estado del contrato">
+                                            <select class="form-control select2" name="empEstadoContrato" id="empEstadoContrato">
+                                                <option>Activo</option>
+                                                <option>Inactivo</option>
+                                            </select>
+                                            
                                           </div>
                                         </div>     
                                         <div class="form-group row">
                                           <label for="monedaContrato" class="col-sm-5 col-form-label">Moneda</label>
                                           <div class="col-sm-7">
                                               <select  class="form-control select2" name="monedaContrato" id="monedaContrato">
-                                                  <option selected="selected">Soles</option>
-                                                  <option selected="selected">Dolares</option>
-                                                  <option selected="selected">Euros</option>
+                                                  <option>Soles</option>
+                                                  <option>Dolares</option>
+                                                  <option>Euros</option>
                                                   
                                               </select>
                                           </div>

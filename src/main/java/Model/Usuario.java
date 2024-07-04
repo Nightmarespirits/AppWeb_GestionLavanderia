@@ -81,7 +81,15 @@ public class Usuario {
         this.perfil = perfil;
     }
     
-    
+    void cargarFotoEmp(int nroDoc) {
+        try {
+
+            String sql = "select Foto from tb_Empleado where tb_Empleado.NumDocIdentidad = '" + nroDoc + "'";
+            
+        } catch (Exception e) {
+            System.out.println("Ha ocurrido un error garrafal al intentar acceder a la foto " + e.getMessage() + e.getStackTrace());
+        }
+    }
 
     
     //DAO
@@ -189,26 +197,31 @@ public class Usuario {
     }
     
     public List listaUsuario(){
-    List lista = new ArrayList();
-    try {
-        String sql = "select * from usuario";
-        Statement st = cn.createStatement();
-        ResultSet rs = st.executeQuery(sql);
+        List lista = new ArrayList();
+        try {
+            String sql = "SELECT        dbo.tb_Usuario.CodUsuario, dbo.tb_Usuario.NombreUsuario, { fn CONCAT(dbo.tb_Empleado.Apellidos, dbo.tb_Empleado.Nombres) } AS Empleado, dbo.tb_Usuario.EstadoUsuario, dbo.tb_Empleado.Foto, dbo.tb_Perfil.Perfil\n" +
+                        "FROM            dbo.tb_Area INNER JOIN\n" +
+                        " dbo.tb_Cargo ON dbo.tb_Area.CodArea = dbo.tb_Cargo.CodArea INNER JOIN\n" +
+                        " dbo.tb_ContratoEmp ON dbo.tb_Cargo.CodCargo = dbo.tb_ContratoEmp.CodCargo INNER JOIN\n" +
+                        " dbo.tb_Empleado ON dbo.tb_ContratoEmp.CodEmp = dbo.tb_Empleado.CodEmp INNER JOIN\n" +
+                        " dbo.tb_Usuario ON dbo.tb_Empleado.CodEmp = dbo.tb_Usuario.CodEmp INNER JOIN\n" +
+                        " dbo.tb_Perfil ON dbo.tb_Usuario.CodPerfil = dbo.tb_Perfil.CodPerfil";
+            Statement st = cn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
 
-        while(rs.next()){
-            Object data[] = {
-              rs.getInt(1),
-              rs.getString(2),
-              rs.getString(3),
-              rs.getString(4),
-              rs.getString(5),
-              rs.getInt(6),
-              rs.getString(7),
-            };
-            lista.add(data);
+            while(rs.next()){
+                Object data[] = {
+                  rs.getInt(1),
+                  rs.getString(2),
+                  rs.getString(3),
+                  rs.getInt(4),
+                  rs.getBytes(5),
+                  rs.getString(6)
+                };
+                lista.add(data);
             }
-        } catch (Exception e) {
-            System.out.println("Error");
+        } catch (SQLException e) {
+            System.out.println("Error al listar usuario");
         }
         return lista;
     }

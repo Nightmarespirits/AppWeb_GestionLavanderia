@@ -94,169 +94,186 @@
                         <h4>Datos del Cliente</h4> 
                     </div>
                     <div class="card-body">
-                        <form  action="/Web_SistemaLavanderiaControl_SLC/ClientesLet" method="post" >
+                        <form  class="form-horizontal row" action="/Web_SistemaLavanderiaControl_SLC/ClientesLet" method="post" >
                             <input type="hidden" name="accion" value="INS">
+                            <div class="col-md-6">
+                              <div class="form-group row">
+                                <label for="cliApellidos" class="col-sm-6 col-form-label">Apellidos</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="cliApellidos" name="cliApellidos" placeholder="Apellidos">
+                                </div>
+                                
+                              </div>  
+                              <div class="form-group row">
+                                <label for="cliNombres" class="col-sm-6 col-form-label">Nombres</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="cliNombres"  name="cliNombres" placeholder="Nombres">
+                                </div>
+                              </div> 
+                              <div class="form-group row">
+                                <label for="cliGenero" class="col-sm-6 col-form-label">Genero</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control select2" name="cliGenero" id="cliGenero">
+                                        <option>Masculino</option>
+                                        <option>Femenino</option>
+                                        <option>Otro</option>
+                                        <option>Prefiero No decirlo</option>
+                                    </select>
+                                </div>
+                                
+                              </div> 
+                              <div class="form-group row">
+                                  <label for="selectTipoDoc" class="col-sm-6 col-form-label" >Tipo de Documento</label>
+                                  <div class="col-sm-6">
+                                     <select class="form-control select2" id="selectTipoDoc" name="selectTipoDoc" style="width: 100%;">
 
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="form-group">
-                                      <label for="cliApellidos">Apellidos</label>
-                                      <input type="text" class="form-control" id="cliApellidos" name="cliApellidos" placeholder="Apellidos">
-                                    </div>  
-                                    <div class="form-group">
-                                      <label for="cliNombres">Nombres</label>
-                                      <input type="text" class="form-control" id="cliNombres"  name="cliNombres" placeholder="Nombres">
-                                    </div> 
-                                    <div class="form-group">
-                                      <label for="cliGenero">Genero</label>
-                                      <select class="form-control select2" name="cliGenero" id="cliGenero">
-                                          
-                                          <option>Masculino</option>
-                                          <option>Femenino</option>
-                                          <option>Otro</option>
-                                          <option>Prefiero No decirlo</option>
-                                      </select>
-                                    </div> 
-                                    <div class="form-group">
-                                        <label for="selectTipoDoc" >Tipo de Documento</label>
-                                        <select class="form-control select2" id="selectTipoDoc" name="selectTipoDoc" style="width: 100%;">
+                                        <%
+                                        try{
+                                          String sql = "select * from tb_TipoDoc";
+                                          Statement st = cn.createStatement();
+                                          ResultSet rs = st.executeQuery(sql);
+                                          while(rs.next()){
 
-                                            <%
-                                            try{
-                                              String sql = "select * from tb_TipoDoc";
+
+
+                                        %>
+                                          <option><%=rs.getString(2)%></option>
+                                          <%
+                                             }
+
+                                          }catch(Exception e){
+                                              System.out.println(e.getCause());
+                                          }
+                                          %>
+                                    </select>
+                                  </div>
+                                  
+                              </div>
+                              <div class="form-group row">
+                                <label for="cliNumDoc" class="col-sm-6 col-form-label">Numero de Documento de Identidad</label>
+                                <div class="col-sm-6">
+                                  <input type="text" class="form-control" id="cliNumDoc"  name="cliNumDoc" placeholder="Numero de Documento">
+                                </div>
+                              </div> 
+                              <div class="form-group row">
+                                <label for="cliTelef" class="col-sm-6 col-form-label">Numero Telefonico</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" id="cliTelef"  name="cliTelef" placeholder="Telefóno">                               
+                                </div>
+                              </div> 
+                              <div class="form-group row">
+                                <label for="cliEmail" class="col-sm-6 col-form-label">Correo Electronico</label>
+                                <div class="col-sm-6">
+                                   <input type="email" class="form-control" id="cliEmail" name="cliEmail" placeholder="Email">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                  <label for="selectNac" class="col-sm-6 col-form-label" >Nacionalidad</label>
+                                  <div class="col-sm-6">
+                                      <select class="form-control select2" id="selectNac"  name="selectNac" style="width: 100%;">
+                                        <option selected="selected">Peruana</option>
+                                          <% 
+                                          try{
+                                              String sql = "select * from tb_Nacionalidad";
                                               Statement st = cn.createStatement();
                                               ResultSet rs = st.executeQuery(sql);
                                               while(rs.next()){
+                                          %>
+                                        <option><%=rs.getString(3)%></option>
 
+                                          <%
+                                               }
 
+                                            }catch(Exception e){
+                                                System.out.println(e.getCause());
+                                            }     
 
-                                            %>
-                                              <option><%=rs.getString(2)%></option>
-                                              <%
-                                                 }
+                                          %>
 
-                                              }catch(Exception e){
-                                                  System.out.println(e.getCause());
-                                              }
-                                              %>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="cliNumDoc">Numero de Documento de Identidad</label>
-                                      <input type="text" class="form-control" id="cliNumDoc"  name="cliNumDoc" placeholder="Numero de Documento">
-                                    </div> 
-                                    <div class="form-group">
-                                      <label for="cliTelef">Numero Telefonico</label>
-                                      <input type="text" class="form-control" id="cliTelef"  name="cliTelef" placeholder="Telefóno">
-                                    </div> 
-                                    <div class="form-group">
-                                      <label for="cliEmail">Correo Electronico</label>
-                                      <input type="email" class="form-control" id="cliEmail" name="cliEmail" placeholder="Email">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="selectNac" >Nacionalidad</label>
-                                        <select class="form-control select2" id="selectNac"  name="selectNac" style="width: 100%;">
-
-
-                                            <option selected="selected">Peruana</option>
-                                              <% 
-                                              try{
-                                                  String sql = "select * from tb_Nacionalidad";
-                                                  Statement st = cn.createStatement();
-                                                  ResultSet rs = st.executeQuery(sql);
-                                                  while(rs.next()){
-                                              %>
-                                            <option><%=rs.getString(3)%></option>
-
-                                              <%
-                                                   }
-
-                                                }catch(Exception e){
-                                                    System.out.println(e.getCause());
-                                                }     
-
-                                              %>
-
-                                        </select>
-                                    </div>    
-                                    <div class="form-group">
-                                        <label for="departamento">Departamento:</label>
+                                    </select>
+                                  </div>
+                                  
+                              </div> 
+                            </div>
+                            <div clas="col-md-6">
+                                <div class="form-group row">
+                                    <label for="departamento" class="col-sm-6 col-form-label">Departamento:</label>
+                                    <div class="col-sm-6">
                                         <select class="form-control select2" id="selectDep" name="selectDep" v-model="selectedDepartamento">
                                             <option value="" disabled>Seleccione un departamento</option>
                                             <option v-for="(provincias, departamento) in departamentos" :key="departamento" :value="departamento">
                                                 {{ departamento }}
                                             </option>
                                         </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="provincia">Provincia:</label>
+                                    </div>                                 
+                                </div>
+                                <div class="form-group row">
+                                    <label for="provincia" class="col-sm-6 col-form-label">Provincia:</label>
+                                    <div class="col-sm-6">
                                         <select class="form-control select2" id="selectProv" name="selectProv" v-model="selectedProvincia" :disabled="!selectedDepartamento">
                                             <option value="" disabled>Seleccione una provincia</option>
                                             <option v-for="(distritos, provincia) in provincias" :key="provincia" :value="provincia">
                                                 {{ provincia }}
                                             </option>
                                         </select>
-                                    </div>
-                                    <div class="form-group">
-                                         <label for="distrito">Distrito:</label>
-                                        <select class="form-control select2" id="selectDist" name="selectDist" v-model="selectedDistrito" :disabled="!selectedProvincia">
+                                    </div>    
+                                </div>
+                                <div class="form-group row">
+                                     <label for="distrito" class="col-sm-6 col-form-label">Distrito:</label>
+                                     <div class="col-sm-6">
+                                         <select class="form-control select2" id="selectDist" name="selectDist" v-model="selectedDistrito" :disabled="!selectedProvincia">
                                             <option value="" disabled>Seleccione un distrito</option>
                                             <option v-for="distrito in distritos" :key="distrito" :value="distrito">
                                                 {{ distrito }}
                                             </option>
-                                        </select>   
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                      <label for="cliDir">Direccion</label>
-                                      <input type="text" class="form-control" id="cliDir" name="cliDir" placeholder="Direccion">
-                                    </div> 
-                                    <div class="form-group">
-                                      <label for="cliFecNac">Fecha de Nacimiento</label>
-                                        <div class="input-group date" id="reservationdate"  data-target-input="nearest">
-                                            <input type="text" class="form-control datetimepicker-input" name="cliFecNac" id="cliFecNac" data-target="#reservationdate"/>
-                                            <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
+                                        </select> 
+                                     </div>
+                                </div>
+
+                                <div class="form-group row">
+                                  <label for="cliDir" class="col-sm-6 col-form-label">Direccion</label>
+                                  <div class="col-sm-6">
+                                     <input type="text" class="form-control" id="cliDir" name="cliDir" placeholder="Direccion">
+                                  </div>
+                                </div> 
+                                <div class="form-group row">
+                                  <label for="cliFecNac" class="col-sm-6 col-form-label">Fecha de Nacimiento</label>
+                                  <div class="col-sm-6">
+                                      <div class="input-group date" id="reservationdate"  data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" name="cliFecNac" id="cliFecNac" data-target="#reservationdate"/>
+                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                      <label for="cliEstCivil">Estado Civil</label>
-                                      <input type="text" class="form-control" id="cliEstCivil" name="cliEstCivil" placeholder="Estado Civil">
-                                    </div> 
-                                    <div class="form-group" >
-                                      <label for="cliFecReg">Fecha de Registro</label>
-                                      <input type="text"  v-model="fechaActual" name ="cliFecReg"  id="cliFecReg" class="form-control" readonly placeholder="Fecha de registro" >
-                                    </div> 
-                                    <!--inicio entrada para la foto-->
-                                    <div class="form-group">
-                                        <div class="panel">SUBIR FOTO</div>
-                                        <input type="file" 
-                                               name="nuevaFoto">
-
-                                        <p class="help-list-item">Peso màximo 2MB</p>
-                                        <img src="imagenes/default.jpg" 
-                                             class="img-thumbnail"
-                                             width="100px">
-
-                                    </div>
-
-                                   <!--fin entrada para la foto--> 
-
+                                  </div>
+                                    
                                 </div>
-                                <div class="card-footer ">
-                                    <center>
-                                        <button type="submit" class="btn btn-primary">Guardar Datos</button>
-                                    </center>
+                                <div class="form-group row">
+                                  <label for="cliEstCivil" class="col-sm-6 col-form-label">Estado Civil</label>
+                                  <div class="col-sm-6">
+                                     <input type="text" class="form-control" id="cliEstCivil" name="cliEstCivil" placeholder="Estado Civil">
+                                  </div>
+                                </div> 
+                                <div class="form-group row" >
+                                  <label for="cliFecReg" class="col-sm-6 col-form-label">Fecha de Registro</label>
+                                  <div class="col-sm-6">
+                                      <input type="text"  v-model="fechaActual" name ="cliFecReg"  id="cliFecReg" class="form-control" readonly placeholder="Fecha de registro" >
+                                  </div>
                                 </div> 
                             </div>
+                            <div class="card-footer">
+                                <center>
+                                    <button type="submit" class="btn btn-primary">Guardar Datos</button>
+                                </center>
+                            </div>
+                                          
+                                          
                         </form>
+                        
+          
                     </div>
 
-                    <div class="card-footer">
-                        Footer
-                    </div>
-
+                    
                 </div> 
             </section>
 

@@ -3,15 +3,31 @@ if(window.sessionStorage.hasOwnProperty("session")){
     let session = JSON.parse(window.sessionStorage.getItem('session'));
 
     let nameParsed = session.nombres.split(" ")[0] + " " + session.apellidos.split(" ")[0];
-    console.log(nameParsed);
-
+    
     document.getElementById('sessionUsername').innerHTML= nameParsed;
     document.getElementById('usrRol').innerHTML = session.rol;
+    
+    var fotoUser =  document.getElementById('renderUserImage');
+    // Uint8Array instance
+    let bytesArr = new Uint8Array(session.foto);
+    let base64BytesArray = bytesToBase64(bytesArr);
+
+    fotoUser.setAttribute("src", "data:image/jpg;base64," + base64BytesArray);
 }else{
     //(por implementar) Podemos mostrar un modal aqui para que inicie session
     console.log("advertencia: No se inicio Sesion");
 }
 
+
+//Funcion para combertir a BytesBase64
+function bytesToBase64(bytes) {
+    let binary = '';
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return btoa(binary);
+}
 //Evento para el campo Cerrar session del navbar (Elimina SessionStorage() del cache de navegador)
 document.getElementById("cerrarSesion").addEventListener('click', (e) => {
     e.preventDefault();

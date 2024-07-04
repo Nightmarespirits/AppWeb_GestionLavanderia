@@ -19,8 +19,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import jakarta.servlet.http.Part;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,7 +58,7 @@ public class Empleadoslet extends HttpServlet {
             String numDoc = request.getParameter("empNumDoc");
             String tel = request.getParameter("empTelefono");
             String email = request.getParameter("empEmail");
-            String dist = request.getParameter("empDist");
+            String dist = request.getParameter("selectDist");
             Date fecNac = formateador.parse(request.getParameter("empFecNac"));
             String nac = request.getParameter("empNacionalidad");
             String dir = request.getParameter("empDir");
@@ -70,30 +72,32 @@ public class Empleadoslet extends HttpServlet {
             }
             
             int nroHijos = Integer.parseInt(request.getParameter("empNroHijos"));
-            /*
-            Part foto;
-            foto = request.getPart('empFoto');
-            String fotoName = Paths.get(foto.getSubmittedFileName()).getFileName().toString();
-            byte[] bufferImage = new byte[1024];
-            String rutaAlmc = "/adm/config/users/usersImages";
-            OutputStream salida = null ;
-            InputStream entrada = null;
-            try {
-                salida = new FileOutputStream(new File( rutaAlmc+ File.separator + fotoName));
-                entrada = foto.getInputStream();
-                int i;
-                while((i = entrada.read(bufferImage)) != -1){
-                    salida.write(bufferImage, 0 , i);
-                }
-            } catch (FileNotFoundException e) {
-                System.out.println("Error garrafal en convertir la foto:");
-                
-            }finally{
-                 if (salida != null) salida.close();
-                 if (entrada != null) entrada.close();
+            /*Intentar Foto Usuario **/
+            
+            Part fotoPart = request.getPart("nuevaFoto");
+            System.out.println("Foto Empleado: "  + fotoPart);
+            
+            long filesize = fotoPart.getSize();
+            System.out.println("Tamaño de Foto : "  + filesize);
+
+            if(filesize > 2* 1024 * 1024){
+                System.out.print("error archivo demasiado grande");
+                return;
             }
-            */
-            Empleado emp = new Empleado(ape,nom,genero,tipoDoc,numDoc,tel,email,dist,fecNac,nac,dir,eCivil,suc,numEstadoEmp,nroHijos,null);
+            byte[] fotoBytes = new byte[(int)filesize];
+            
+            System.out.println("arreglo Foto en Bytes: "  + Arrays.toString(fotoBytes));
+
+            try (InputStream inputStream = fotoPart.getInputStream()){
+                inputStream.read(fotoBytes);
+                System.out.print("Conversion completada satisfactoriamente");
+            } catch (IOException e) {
+                System.out.println("error al leer la foto archivo dañado, " + e.getMessage());
+            }
+         
+            System.out.println("arreglo foto en Bytes bytes agregados al arreglo: "  + Arrays.toString(fotoBytes));
+            
+            Empleado emp = new Empleado(ape,nom,genero,tipoDoc,numDoc,tel,email,dist,fecNac,nac,dir,eCivil,suc,numEstadoEmp,nroHijos,fotoBytes);
             
             boolean res = empDao.insertEmp(emp);
             System.out.println("Estado de insercion de empleado = " + res);
@@ -117,8 +121,10 @@ public class Empleadoslet extends HttpServlet {
             String chekCrearCuenta = request.getParameter("checkNuevaCuenta");
             
             if ("on".equals(chekCrearCuenta)) {
-                String contrasenia= EmailUtil.generarContraseña();
+                //Desactivacion temporal de la generacion de contraseñas para hacer mas facil de acceder
+                //String contrasenia= EmailUtil.generarContraseña();
                 String perfil;
+                
                 
                 if(cargo.equals("Administrador")){
                     perfil = "Administrador";
@@ -126,11 +132,19 @@ public class Empleadoslet extends HttpServlet {
                     perfil = "Empleado";
                 }
                 Usuario usuario = new Usuario();
-                Usuario usr = new Usuario(numDoc,numDoc,contrasenia , estadoEmp, perfil);
+                Usuario usr = new Usuario(numDoc,numDoc,numDoc , estadoEmp, perfil);
                 boolean insUsr = usuario.insertarUsuario(usr);
                 if(insUsr){
                     String destinatario = email; //Correo electronico del empleado
-                    EmailUtil.enviarMail(destinatario, "Cuenta de Usuario SLC", "Se ha creado su cuenta \nUsuario: " + numDoc + "\nContraseña: " + contrasenia);
+                    EmailUtil.enviarMail(destinatario, "NUEVA CUENTA DE USUARIO SLC", 
+                            "Su cuenta a sido creada exitosamente con las siguientes credenciales:  "
+                                    + "\nUsuario:  " + numDoc + 
+                                    "\nContraseña: " + numDoc +
+                                    "\n " +
+                                    "\n " +
+                                    "\n Recuerde cambiar su contraseñas para mayor seguridad."+
+                                    "\n Atentamente el equipo de soporte SLC "
+                    );
                 }else{
                      System.out.println("No se ha podido enviar correo al usuario");
                 }

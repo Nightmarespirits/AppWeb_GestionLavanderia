@@ -71,8 +71,6 @@
 try {
     var user = '<%= request.getAttribute("usrstring") %>';
     let userObj = JSON.parse(user);
-    console.log("string" + user);
-    console.log("obj" + userObj);
 
     if(  user !== "null" && user !== "{}" && typeof(userObj) === "object"){
         //Guardar datos de session

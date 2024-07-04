@@ -98,8 +98,8 @@
                 <div class="card">
                     <div class="card-header">
                        <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarUsuario">
-                        Nuevo Empleado
+                    <button type="button" class="btn btn-primary" onclick="window.location.href='../nuevo/empleado.jsp';">
+                        Agregar Empleado
                     </button>
 
 
@@ -108,13 +108,14 @@
                         <table width="100%" class="table-bordered table-striped table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    
                                     <th>Nombres</th>
                                     <th>Nro Documento</th>
                                     <th>Cargo</th>
                                     <th>Telefono</th>
                                     <th>Email</th>
-                                    <th>Distrito</th>
+                                    <th>Contrato</th>
+                                    <th>Sucursal</th>
                                     <th>Acciones</th>
 
                                 </tr>
